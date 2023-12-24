@@ -1,4 +1,4 @@
-package com.github.dddpaul.bpmnanalyzer.analyze;
+package com.github.dddpaul.bpmnanalyzer;
 
 import io.camunda.zeebe.model.bpmn.Bpmn;
 import io.camunda.zeebe.model.bpmn.BpmnModelInstance;

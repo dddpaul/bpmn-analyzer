@@ -1,0 +1,5 @@
+# Configuration for the application
+app:
+  analyzer:
+    enabled: true
+    process-file: car-insurance-application.bpmn

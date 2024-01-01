@@ -1,11 +1,12 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.1'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'com.github.dddpaul'
 version = '0.0.1-SNAPSHOT'
+mainClassName = 'com.github.dddpaul.bpmnanalyzer.Application'
 
 repositories {
     mavenLocal()
@@ -13,9 +14,8 @@ repositories {
 }
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter"
     implementation "io.camunda:zeebe-bpmn-model:8.3.4"
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'info.picocli:picocli:4.7.5'
 }
 
 test {

@@ -16,6 +16,7 @@ repositories {
 dependencies {
     implementation "io.camunda:zeebe-bpmn-model:8.3.4"
     implementation 'info.picocli:picocli:4.7.5'
+    implementation 'org.slf4j:slf4j-simple:2.0.10'
 }
 
 test {

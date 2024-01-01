@@ -34,7 +34,7 @@ public class Application {
                     .map(task -> task.getSingleExtensionElement(ZeebeTaskDefinition.class))
                     .map(ZeebeTaskDefinition::getType)
                     .toList();
-            log.info("BPMN schema contains tasks: {}", types);
+            System.out.println("Task types = " + types);
         }
     }
 

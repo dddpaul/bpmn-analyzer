@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.bmuschko.docker-java-application' version '9.4.0'
 }
 
 group = 'com.github.dddpaul'
@@ -21,4 +22,28 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+docker {
+    javaApplication {
+        baseImage = 'bellsoft/liberica-openjdk-alpine-musl:21.0.1'
+        maintainer = 'Pavel Derendyaev "dddpaul@gmail.com"'
+        ports = []
+//        mainClassName = 'com.github.dddpaul.bpmnanalyzer.Application'
+    }
+}
+
+dockerCreateDockerfile {
+    dependsOn shadowJar
+//    addFile "libs/${project.name}-${project.version}-all.jar", '/app.jar'
+//    entryPoint 'java', '-Djava.security.egd=file:/dev/./urandom', '-jar', '/app.jar'
+}
+
+dockerBuildImage {
+    dependsOn dockerCreateDockerfile
+//    inputDir = createDockerfile.destFile.parentFile
+//    tags = [
+//            "${dockerPrefix}/${rootProject.name}-${project.name}".toString(),
+//            "${dockerPrefix}/${rootProject.name}-${project.name}:${project.version}".toString()
+//    ]
 }

@@ -9,6 +9,10 @@ group = 'com.github.dddpaul'
 version = '0.0.1-SNAPSHOT'
 mainClassName = 'com.github.dddpaul.bpmnanalyzer.Application'
 
+ext {
+    dockerPrefix = "dddpaul"
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -24,26 +28,20 @@ test {
     useJUnitPlatform()
 }
 
-docker {
-    javaApplication {
-        baseImage = 'bellsoft/liberica-openjdk-alpine-musl:21.0.1'
-        maintainer = 'Pavel Derendyaev "dddpaul@gmail.com"'
-        ports = []
-//        mainClassName = 'com.github.dddpaul.bpmnanalyzer.Application'
-    }
-}
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
-dockerCreateDockerfile {
+task createDockerfile(type: Dockerfile) {
     dependsOn shadowJar
-//    addFile "libs/${project.name}-${project.version}-all.jar", '/app.jar'
-//    entryPoint 'java', '-Djava.security.egd=file:/dev/./urandom', '-jar', '/app.jar'
+    destFile = project.file("${project.buildDir}/Dockerfile")
+    from 'bellsoft/liberica-openjdk-alpine-musl:21.0.1'
+    label 'maintainer': 'Pavel Derendyaev "dddpaul@gmail.com"'
+    addFile "libs/${project.name}-${project.version}-all.jar", '/app.jar'
+    entryPoint 'java', '-Djava.security.egd=file:/dev/./urandom', '-jar', '/app.jar'
 }
 
-dockerBuildImage {
-    dependsOn dockerCreateDockerfile
-//    inputDir = createDockerfile.destFile.parentFile
-//    tags = [
-//            "${dockerPrefix}/${rootProject.name}-${project.name}".toString(),
-//            "${dockerPrefix}/${rootProject.name}-${project.name}:${project.version}".toString()
-//    ]
+task buildDockerImage(type: DockerBuildImage) {
+    dependsOn createDockerfile
+    inputDir = project.file("${project.buildDir}")
+    images.add("${dockerPrefix}/${project.name}:${project.version}")
 }

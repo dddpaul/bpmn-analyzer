@@ -1,5 +1,8 @@
 package com.github.dddpaul.bpmnanalyzer;
 
+import com.github.dddpaul.bpmnanalyzer.entities.BpmnInfo;
+import com.github.dddpaul.bpmnanalyzer.entities.Task;
+import com.google.gson.Gson;
 import io.camunda.zeebe.model.bpmn.Bpmn;
 import io.camunda.zeebe.model.bpmn.BpmnModelInstance;
 import io.camunda.zeebe.model.bpmn.instance.BaseElement;
@@ -36,12 +39,13 @@ public class Application {
                     .findFirst()
                     .map(BaseElement::getId)
                     .orElseThrow();
-            Collection<ServiceTask> tasks = instance.getModelElementsByType(ServiceTask.class);
-            List<?> types = tasks.stream()
+            Collection<ServiceTask> serviceTasks = instance.getModelElementsByType(ServiceTask.class);
+            List<Task> tasks = serviceTasks.stream()
                     .map(task -> task.getSingleExtensionElement(ZeebeTaskDefinition.class))
                     .map(ZeebeTaskDefinition::getType)
+                    .map(Task::new)
                     .toList();
-            System.out.printf("process: %s, tasks: %s\n", processId, types);
+            System.out.println(new Gson().toJson(new BpmnInfo(processId, tasks)));
         }
     }
 

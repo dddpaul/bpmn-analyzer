@@ -32,10 +32,11 @@ jobs:
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${{ secrets.DOCKER_REGISTRY_URL }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-      - name: Build and push image
+      - name: Use proper runner to build java app
         uses: actions/setup-java@v4
         with:
           distribution: 'liberica'
           java-version: '21'
 
-      - run: make push version=${{ steps.release.outputs.version }}
+      - name: Build and push image
+        run: make push version=${{ steps.release.outputs.version }}

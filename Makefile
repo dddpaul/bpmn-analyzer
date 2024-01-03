@@ -8,5 +8,5 @@ build:
 docker:
 	@./gradlew clean buildDockerImage -Pversion=$(version)
 
-push: docker
-	@docker push ${IMAGE}:$(version)
+push:
+	@./gradlew pushDockerImage -Pversion=$(version)

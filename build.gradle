@@ -30,6 +30,7 @@ test {
 
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 
 task createDockerfile(type: Dockerfile) {
     dependsOn shadowJar
@@ -43,5 +44,10 @@ task createDockerfile(type: Dockerfile) {
 task buildDockerImage(type: DockerBuildImage) {
     dependsOn createDockerfile
     inputDir = project.file("${project.buildDir}")
+    images.add("${dockerPrefix}/${project.name}:${project.version}")
+}
+
+task pushDockerImage(type: DockerPushImage) {
+    dependsOn buildDockerImage
     images.add("${dockerPrefix}/${project.name}:${project.version}")
 }

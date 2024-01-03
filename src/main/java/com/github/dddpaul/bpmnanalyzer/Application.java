@@ -22,14 +22,14 @@ public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-    @Option(names = {"-p", "--process"}, description = "BPMN process file name", required = true)
+    @Option(names = {"-p", "--process"}, description = "BPMN process file name")
     private String processFileName = "";
 
     @Option(names = {"-h", "--help"}, description = "Display a help message", usageHelp = true)
     private boolean help = false;
 
     public void start() throws IOException {
-        try (InputStream stream = Files.newInputStream(Path.of(processFileName))) {
+        try (InputStream stream = !"".equals(processFileName) ? Files.newInputStream(Path.of(processFileName)) : System.in) {
             BpmnModelInstance instance = Bpmn.readModelFromStream(stream);
             Collection<Process> processes = instance.getDocumentElement().getChildElementsByType(Process.class);
             String processId = processes.stream()

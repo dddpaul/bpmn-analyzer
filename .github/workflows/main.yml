@@ -37,4 +37,5 @@ jobs:
         with:
           distribution: 'liberica'
           java-version: '21'
-        run: make push version=${{ steps.release.outputs.version }}
+
+      - run: make push version=${{ steps.release.outputs.version }}

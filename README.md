@@ -27,11 +27,11 @@ The program supports the following options:
 A more convenient way is to run docker image and pass a BPMN file to STDIN:
 
 ```bash
-cat [process_file] | docker run -i dddpaul/bpmn-analyzer:v0.5.0
+cat [process_file] | docker run -i dddpaul/bpmn-analyzer
 ```
 
 To pretty output use ```jq```:
 
 ```bash
-cat [process_file] | docker run -i dddpaul/bpmn-analyzer:v0.5.0 | jq .
+cat [process_file] | docker run -i dddpaul/bpmn-analyzer | jq .
 ```

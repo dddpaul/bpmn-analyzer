@@ -45,9 +45,11 @@ task buildDockerImage(type: DockerBuildImage) {
     dependsOn createDockerfile
     inputDir = project.file("${project.buildDir}")
     images.add("${dockerPrefix}/${project.name}:${project.version}")
+    images.add("${dockerPrefix}/${project.name}:latest")
 }
 
 task pushDockerImage(type: DockerPushImage) {
     dependsOn buildDockerImage
     images.add("${dockerPrefix}/${project.name}:${project.version}")
+    images.add("${dockerPrefix}/${project.name}:latest")
 }

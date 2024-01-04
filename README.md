@@ -1,6 +1,6 @@
 # BPMN Process Analyzer
 
-This program analyzes BPMN processes and extracts information about the process and its tasks.ming techniques.
+This program analyzes BPMN processes and extracts information about the process and its tasks.
 
 ## Usage
 
@@ -27,11 +27,11 @@ The program supports the following options:
 A more convenient way is to run docker image and pass a BPMN file to STDIN:
 
 ```bash
-cat [process_file] | docker run -i dddpaul/bpmn-analyzer:0.0.1-SNAPSHOT
+cat [process_file] | docker run -i dddpaul/bpmn-analyzer:v0.5.0
 ```
 
 To pretty output use ```jq```:
 
 ```bash
-cat [process_file] | docker run -i dddpaul/bpmn-analyzer:0.0.1-SNAPSHOT | jq .
+cat [process_file] | docker run -i dddpaul/bpmn-analyzer:v0.5.0 | jq .
 ```
